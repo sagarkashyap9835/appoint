@@ -14,9 +14,8 @@ const app=express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://clinicsagar.onrender.com",
-  "https://dashboard-uahn.onrender.com"
-  
+  // "https://clinicsagar.onrender.com",
+  // "https://dashboard-uahn.onrender.com"
 ];
 
 app.use(
