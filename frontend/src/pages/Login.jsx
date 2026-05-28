@@ -15,32 +15,48 @@ const Login = () => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     console.log({ name, email, password, state });
-try {
-  if(state==='Sign Up'){
-    const {data}=await axios.post(backendUrl+'/api/user/register',{name,password,email})
-    if(data.success){
-      localStorage.setItem('token',data.token)
-      setToken(data.token)
-      toast.success("User Registered Successfully")
-    }else{
-      toast.error(data.message)
-    }
-  }
-  else{
-   const {data}=await axios.post(backendUrl+'/api/user/login',{password,email})
-    if(data.success){
-      localStorage.setItem('token',data.token)
-      setToken(data.token)
-         toast.success("User login Successfully")
-    }else{
-      toast.error(data.message)
-    }
-  }
 
+    // Client-side validations
+    if (state === 'Sign Up' && !name.trim()) {
+      toast.error("Please enter your name");
+      return;
+    }
 
-} catch (error) {
-  toast.error(error.message)
-}
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters long");
+      return;
+    }
+
+    try {
+      if(state==='Sign Up'){
+        const {data}=await axios.post(backendUrl+'/api/user/register',{name,password,email})
+        if(data.success){
+          localStorage.setItem('token',data.token)
+          setToken(data.token)
+          toast.success("User Registered Successfully")
+        }else{
+          toast.error(data.message)
+        }
+      }
+      else{
+       const {data}=await axios.post(backendUrl+'/api/user/login',{password,email})
+        if(data.success){
+          localStorage.setItem('token',data.token)
+          setToken(data.token)
+             toast.success("User logged in successfully")
+        }else{
+          toast.error(data.message)
+        }
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message)
+    }
   };
 
 useEffect(() => {
