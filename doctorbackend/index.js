@@ -7,7 +7,7 @@ import adminrouter from './routes/adminRoute.js';
 import doctorRouter from './routes/doctorRoute.js';
 import userRouter from './routes/userRoute.js';
 
-dotenv.config();
+dotenv.config({ override: true });
 const app=express();
 
 
