@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { AdminContext } from '../../context/AdminContext';
+import { HiOutlineTrash } from 'react-icons/hi';
 
 const DoctorsList = () => {
-  const { doctors, atoken, getAllDoctors, changeAvailablity } = useContext(AdminContext);
+  const { doctors, atoken, getAllDoctors, changeAvailablity, deleteDoctor } = useContext(AdminContext);
 
   useEffect(() => {
     if (atoken) {
@@ -41,7 +42,7 @@ const DoctorsList = () => {
               <h2 className="text-xl font-semibold text-gray-800">{item.name}</h2>
               <p className="text-gray-600 mb-3">{item.speciality}</p>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
                 <label className="flex items-center cursor-pointer">
                   <div className="relative">
                     <input
@@ -65,6 +66,14 @@ const DoctorsList = () => {
                     {item.available ? 'Available' : 'Unavailable'}
                   </span>
                 </label>
+
+                <button
+                  onClick={() => deleteDoctor(item._id)}
+                  className="flex items-center justify-center p-2 rounded-xl text-red-500 hover:bg-red-50 hover:text-red-600 active:scale-95 transition-all duration-200 cursor-pointer"
+                  title="Delete Doctor"
+                >
+                  <HiOutlineTrash className="w-5 h-5" />
+                </button>
               </div>
             </div>
           </div>

@@ -39,7 +39,7 @@ if(data.success){
   toast.success(data.message)
   getAllDoctors()
 }else{
-  toast.error(error.message)
+  toast.error(data.message)
 }
 
   } catch (error) {
@@ -47,9 +47,28 @@ if(data.success){
   }
 }
 
+const deleteDoctor = async (docId) => {
+  try {
+    const { data } = await axios.post(
+      backendUrl + '/api/admin/delete-doctor',
+      { docId },
+      { headers: { atoken } }
+    )
+
+    if (data.success) {
+      toast.success(data.message)
+      getAllDoctors()
+    } else {
+      toast.error(data.message)
+    }
+  } catch (error) {
+    toast.error(error.response?.data?.message || error.message)
+  }
+}
+
 
   const value = {
-   atoken,setAToken,backendUrl,doctors,getAllDoctors,changeAvailablity
+   atoken,setAToken,backendUrl,doctors,getAllDoctors,changeAvailablity,deleteDoctor
   };
 
   return (
